@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class HomeController extends Controller
 {
@@ -24,5 +25,19 @@ class HomeController extends Controller
     public function index()
     {
         return view('admin.components.layout');
+    }
+
+
+    public function contact()
+    {
+       
+    }
+
+
+    public function posts(Request $request)
+    {
+        $posts = Post::get();
+
+        return $posts;
     }
 }
