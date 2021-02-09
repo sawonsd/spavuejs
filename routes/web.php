@@ -20,7 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{anypath}', 'HomeController@index')->where('path','*');
 
 
-Route::get('/contact', 'HomeController@contact')->name('contact');
-Route::get('/posts', 'HomeController@posts')->name('posts');
+Route::post('add-category','CategoryController@store');
+

@@ -28,10 +28,10 @@ class HomeController extends Controller
     }
 
 
-    public function contact()
-    {
-       
-    }
+    // public function contact()
+    // {
+    //    return view('admin.components.layout');
+    // }
 
 
     public function posts(Request $request)
