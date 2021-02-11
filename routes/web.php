@@ -20,8 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/{anypath}', 'HomeController@index')->where('path','*');
+//Route::get('/{anypath}', 'HomeController@index')->where('path','*');
 
 
+
+Route::get('get-category','CategoryController@index');
 Route::post('add-category','CategoryController@store');
+Route::get('remove-category/{id}','CategoryController@destroy');
+
 

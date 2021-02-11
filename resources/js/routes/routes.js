@@ -2,7 +2,7 @@
 import home from '../components/backend/dashboard';
 import category from "../components/ExampleComponent";
 import categoryCreate from "../components/backend/category/create";
-import categoryView from "../components/backend/category/view";
+import categoryView from "../components/backend/category/category";
 
 
 

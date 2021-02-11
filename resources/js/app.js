@@ -10,18 +10,17 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
 window.Form = Form;
-
+//vform
 
 
 //vue router
 import VueRouter from 'vue-router';
-
 Vue.use(VueRouter);
-
+//vue router
 
 //vue routes
 import {routes} from './routes/routes';
-
+//vue routes
 
 //Sweet Alert2
 import Swal from 'sweetalert2'
@@ -39,12 +38,51 @@ const Toast = Swal.mixin({
   }
 })
 window.Toast = Toast;
+//Sweet Alert2
+
+
+//Toastr Aleart
+import toastr from "toastr";
+
+window.toastr = toastr;
+
+toastr.options = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-top-center",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "3000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+//End Toastr Aleart
+
+
+
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+import storeData from "./store/store";
+
+const store = new Vuex.Store(
+	storeData
+);
 
 
 
 const router = new VueRouter({
 	routes,
-	mode: 'history',
+	//mode: 'history',
 })
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -57,5 +95,7 @@ Vue.component('dashboard', require('./components/backend/dashboard.vue').default
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store
+    
 });
