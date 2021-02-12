@@ -13,7 +13,7 @@ export let routes = [
 	{ path: '/category', component: category },
 	{ path: '/category_create', component: categoryCreate },
 	{ path: '/category_list', component: categoryView },
-	{ path: '/category_edit', component: categoryEdit },
+	{ path: '/category_edit/:slug', component: categoryEdit },
 	
 	
 ];

@@ -43,8 +43,8 @@
 					    <li v-for="cat in category">
 					        <i class="fa fa-folder text-secondary mr-2"></i> {{cat.name}} 
 
-					        <router-link to="category_edit">
-					        	<i type="button" class="fa fa-edit float-right text-danger ml-2"></i>
+					        <router-link :to="'/category_edit/'+ cat.slug">
+					        	<i class="fa fa-edit float-right text-danger ml-2"></i>
 					        </router-link> 
 
 					        <i type="button" @click="remove(cat.id)" class="fa fa-trash-alt float-right text-danger"></i>

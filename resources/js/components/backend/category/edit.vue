@@ -12,7 +12,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="quickForm" @submit.prevent="addCategory">
+              <form id="quickForm" @submit.prevent="updateCategory">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="name">Category</label>
@@ -29,28 +29,6 @@
             </div>
             <!-- /.card -->
             </div>
-            <div class="col-md-4">
-            	<div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Category List</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-
-                <div class="card-body">
-                
-                	<ul class="list-inline text-secondary">
-					    <li v-for="cat in category">
-					        <i class="fa fa-folder text-secondary mr-2"></i> {{cat.name}} <i type="button" class="fa fa-edit float-right text-danger ml-2"></i> <i type="button" @click="remove(cat.id)" class="fa fa-trash-alt float-right text-danger"></i>
-					    </li>
-
-					   
-					</ul>
-
-                </div>
-
-            </div>
-            </div>
         </div>
     </div>
 </template>
@@ -63,16 +41,21 @@
 			    return {
 			      // Create a new form instance
 			      form: new Form({
-			        name: '',
+			      	id: null,
+			        name: null,
 			      })
 			    }
 			  },
+		mounted() {
+			this.getCategorydata();
+        	
+        },
 
 		methods: {
-			addCategory: function (){
+			updateCategory: function (){
 
 				let aithis = this;
-				this.form.post('/add-category').then(function(data){
+				this.form.post('/update-category').then(function(data){
 
 					// console.log(data);
 					// Toast.fire({
@@ -85,14 +68,16 @@
 					//       'success'
 					//  )
 
-					toastr.success("Category Created successfully",'Success');
+					
 
 					//change router
-					//aithis.$router.push('/category_create');
+					aithis.$router.push('/category_list');
 
-					aithis.form.name = null;
-					aithis.form.slug = null;
-					aithis.form.status = null;
+					toastr.success("Category Created successfully",'Success');
+
+					// aithis.form.name = null;
+					// aithis.form.slug = null;
+					// aithis.form.status = null;
 
 
 				}).catch((error)=> {
@@ -104,7 +89,7 @@
 					 )
 	  		})
 
-				this.$store.dispatch("getCategories");
+				//this.$store.dispatch("getCategories");
 			},
 
 			remove: function(id){
@@ -151,17 +136,26 @@
 
 
 	        	
+	        },
+
+	        getCategorydata: function(){
+
+	        	const this_ =this;
+	        	axios.get('edit-category/'+ this.$route.params.slug).then((response)=>{
+	        		//console.log(response.data.category);
+	        		
+	        		this_.form.fill(response.data.category);
+	
+	        	}).catch((error)=>{
+	        		console.log(error);
+	        	})
 	        }
 
 		},
 
 
 
-
-
-		mounted() {
-        	this.$store.dispatch("getCategories");
-        },
+		
 
         computed: {
         	category() {

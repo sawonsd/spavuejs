@@ -2352,42 +2352,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "edit",
   data: function data() {
     return {
       // Create a new form instance
       form: new Form({
-        name: ''
+        id: null,
+        name: null
       })
     };
   },
+  mounted: function mounted() {
+    this.getCategorydata();
+  },
   methods: {
-    addCategory: function addCategory() {
+    updateCategory: function updateCategory() {
       var aithis = this;
-      this.form.post('/add-category').then(function (data) {
+      this.form.post('/update-category').then(function (data) {
         // console.log(data);
         // Toast.fire({
         //   icon: 'success',
@@ -2398,17 +2380,15 @@ __webpack_require__.r(__webpack_exports__);
         //       'Category Created successfully.',
         //       'success'
         //  )
-        toastr.success("Category Created successfully", 'Success'); //change router
-        //aithis.$router.push('/category_create');
-
-        aithis.form.name = null;
-        aithis.form.slug = null;
-        aithis.form.status = null;
+        //change router
+        aithis.$router.push('/category_list');
+        toastr.success("Category Created successfully", 'Success'); // aithis.form.name = null;
+        // aithis.form.slug = null;
+        // aithis.form.status = null;
       })["catch"](function (error) {
         //toastr.error("Somting Worng");
         Swal.fire('Error!', 'Category Created Somting Worng.', 'error');
-      });
-      this.$store.dispatch("getCategories");
+      }); //this.$store.dispatch("getCategories");
     },
     remove: function remove(id) {
       var _this = this;
@@ -2436,10 +2416,16 @@ __webpack_require__.r(__webpack_exports__);
           })["catch"](function (error) {});
         }
       });
+    },
+    getCategorydata: function getCategorydata() {
+      var this_ = this;
+      axios.get('edit-category/' + this.$route.params.slug).then(function (response) {
+        //console.log(response.data.category);
+        this_.form.fill(response.data.category);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
-  },
-  mounted: function mounted() {
-    this.$store.dispatch("getCategories");
   },
   computed: {
     category: function category() {
@@ -43472,7 +43458,7 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v("1.")]),
+                            _c("td", [_vm._v(_vm._s(cat.id))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(cat.name))]),
                             _vm._v(" "),
@@ -43483,7 +43469,9 @@ var render = function() {
                               [
                                 _c(
                                   "router-link",
-                                  { attrs: { to: "category_edit" } },
+                                  {
+                                    attrs: { to: "category_edit/" + cat.slug }
+                                  },
                                   [
                                     _c("i", {
                                       staticClass:
@@ -43703,12 +43691,15 @@ var render = function() {
                       staticClass: "fa fa-folder text-secondary mr-2"
                     }),
                     _vm._v(" " + _vm._s(cat.name) + " \n\n\t\t\t\t\t        "),
-                    _c("router-link", { attrs: { to: "category_edit" } }, [
-                      _c("i", {
-                        staticClass: "fa fa-edit float-right text-danger ml-2",
-                        attrs: { type: "button" }
-                      })
-                    ]),
+                    _c(
+                      "router-link",
+                      { attrs: { to: "/category_edit/" + cat.slug } },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-edit float-right text-danger ml-2"
+                        })
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("i", {
                       staticClass: "fa fa-trash-alt float-right text-danger",
@@ -43783,7 +43774,7 @@ var render = function() {
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.addCategory($event)
+                  return _vm.updateCategory($event)
                 }
               }
             },
@@ -43846,40 +43837,6 @@ var render = function() {
             ]
           )
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "card card-info" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "ul",
-              { staticClass: "list-inline text-secondary" },
-              _vm._l(_vm.category, function(cat) {
-                return _c("li", [
-                  _c("i", { staticClass: "fa fa-folder text-secondary mr-2" }),
-                  _vm._v(" " + _vm._s(cat.name) + " "),
-                  _c("i", {
-                    staticClass: "fa fa-edit float-right text-danger ml-2",
-                    attrs: { type: "button" }
-                  }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-trash-alt float-right text-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.remove(cat.id)
-                      }
-                    }
-                  })
-                ])
-              }),
-              0
-            )
-          ])
-        ])
       ])
     ])
   ])
@@ -43891,14 +43848,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h3", { staticClass: "card-title" }, [_vm._v("Edit Category")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Category List")])
     ])
   }
 ]
@@ -61054,7 +61003,7 @@ var routes = [{
   path: '/category_list',
   component: _components_backend_category_category__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
-  path: '/category_edit',
+  path: '/category_edit/:slug',
   component: _components_backend_category_edit__WEBPACK_IMPORTED_MODULE_4__["default"]
 }];
 

@@ -27,11 +27,11 @@
 
                     <tr v-for="cat in category">
                       <td><input type="checkbox" :value="cat.id" v-model="categoriesId"></td>
-                      <td>1.</td>
+                      <td>{{cat.id}}</td>
                       <td>{{cat.name}}</td>
                       <td>{{cat.slug}}</td>
                       <td>
-                      		<router-link to="category_edit">
+                      		<router-link :to="'category_edit/' + cat.slug">
                       			<i type="button" class="fa fa-edit text-danger ml-2"></i>
                       		</router-link>
                       		<i type="button" @click="remove(cat.id)" class="fa fa-trash-alt text-danger"></i>

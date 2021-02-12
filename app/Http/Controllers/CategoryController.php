@@ -68,9 +68,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $category = Category::where('slug',$slug)->first();
+
+        return response()->json(['category' => $category],200);
     }
 
     /**
@@ -80,9 +82,29 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:categories'
+        ]);
+
+        $category = Category::find($request->id);
+
+        $category->name = $request->name;
+        $category->slug = slugify($request->name);
+        $category->status = 1;
+
+        if($category->save()){
+
+            $success = true;
+        }else{
+            $success = false;
+        }
+
+        return response()->json(['success' => $success],200);
+        
+
+ 
     }
 
     /**

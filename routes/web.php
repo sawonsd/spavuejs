@@ -27,5 +27,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('get-category','CategoryController@index');
 Route::post('add-category','CategoryController@store');
 Route::get('remove-category/{id}','CategoryController@destroy');
+Route::get('edit-category/{slug}','CategoryController@edit');
+Route::post('update-category','CategoryController@update');
 
 
