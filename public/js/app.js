@@ -2204,8 +2204,12 @@ __webpack_require__.r(__webpack_exports__);
         //   icon: 'success',
         //   title: 'Category Created successfully'
         // })
-        Swal.fire('Success!', 'Category Created successfully.', 'success'); //toastr.success("successfully");
-        //change router
+        // Swal.fire(
+        //       'Success!',
+        //       'Category Created successfully.',
+        //       'success'
+        //  )
+        toastr.success("Category Created successfully", 'Success'); //change router
         //aithis.$router.push('/category_create');
 
         aithis.form.name = null;
@@ -2232,7 +2236,7 @@ __webpack_require__.r(__webpack_exports__);
         if (result.isConfirmed) {
           axios.get('remove-category/' + id).then(function (response) {
             //toastr.success(response.data);
-            //toastr.success('Category delete success');
+            //toastr.success('Category delete success','Success');
             // 		Toast.fire({
             //   icon: 'success',
             //   title: 'Category delete successfully'
@@ -43445,11 +43449,12 @@ var render = function() {
                   _c("i", { staticClass: "fa fa-folder text-secondary mr-2" }),
                   _vm._v(" " + _vm._s(cat.name) + " "),
                   _c("i", {
-                    staticClass: "fa fa-edit float-right text-danger ml-2"
+                    staticClass: "fa fa-edit float-right text-danger ml-2",
+                    attrs: { type: "button" }
                   }),
                   _vm._v(" "),
                   _c("i", {
-                    staticClass: "fa fa-trash float-right text-danger",
+                    staticClass: "fa fa-trash-alt float-right text-danger",
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
@@ -60180,7 +60185,7 @@ toastr__WEBPACK_IMPORTED_MODULE_4___default.a.options = {
   "debug": false,
   "newestOnTop": false,
   "progressBar": true,
-  "positionClass": "toast-top-center",
+  "positionClass": "toast-top-right",
   "preventDuplicates": false,
   "onclick": null,
   "showDuration": "300",

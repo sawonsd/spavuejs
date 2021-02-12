@@ -41,7 +41,7 @@
                 
                 	<ul class="list-inline text-secondary">
 					    <li v-for="cat in category">
-					        <i class="fa fa-folder text-secondary mr-2"></i> {{cat.name}} <i class="fa fa-edit float-right text-danger ml-2"></i> <i type="button" @click="remove(cat.id)" class="fa fa-trash float-right text-danger"></i>
+					        <i class="fa fa-folder text-secondary mr-2"></i> {{cat.name}} <i type="button" class="fa fa-edit float-right text-danger ml-2"></i> <i type="button" @click="remove(cat.id)" class="fa fa-trash-alt float-right text-danger"></i>
 					    </li>
 
 					   
@@ -79,13 +79,13 @@
 					//   icon: 'success',
 					//   title: 'Category Created successfully'
 					// })
-					Swal.fire(
-					      'Success!',
-					      'Category Created successfully.',
-					      'success'
-					 )
+					// Swal.fire(
+					//       'Success!',
+					//       'Category Created successfully.',
+					//       'success'
+					//  )
 
-					//toastr.success("successfully");
+					toastr.success("Category Created successfully",'Success');
 
 					//change router
 					//aithis.$router.push('/category_create');
@@ -123,7 +123,7 @@
 					  	axios.get('remove-category/'+id).then((response)=>{
 
 	  				//toastr.success(response.data);
-	  				//toastr.success('Category delete success');
+	  				//toastr.success('Category delete success','Success');
 	  		// 		Toast.fire({
 					//   icon: 'success',
 					//   title: 'Category delete successfully'
