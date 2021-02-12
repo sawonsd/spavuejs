@@ -15,6 +15,7 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
+                      <th><input type="checkbox"></th>
                       <th style="width: 10px">ID</th>
                       <th>Category Name</th>
                       <th>Slug</th>
@@ -25,10 +26,16 @@
                   <tbody>
 
                     <tr v-for="cat in category">
+                      <td><input type="checkbox" :value="cat.id" v-model="categoriesId"></td>
                       <td>1.</td>
                       <td>{{cat.name}}</td>
                       <td>{{cat.slug}}</td>
-                      <td><span class="badge bg-danger">55%</span></td>
+                      <td>
+                      		<router-link to="category_edit">
+                      			<i type="button" class="fa fa-edit text-danger ml-2"></i>
+                      		</router-link>
+                      		<i type="button" @click="remove(cat.id)" class="fa fa-trash-alt text-danger"></i>
+                      </td>
                     </tr>
 
 
@@ -81,6 +88,12 @@
     export default {
         name: "category",
 
+        data: function(){
+        	return {
+        		categoriesId:[]
+        	}
+        },
+
         mounted() {
         	this.$store.dispatch("getCategories");
         },
@@ -89,6 +102,54 @@
         	category() {
         		return this.$store.getters.categories;
         	}
+        },
+
+        methods: {
+        	remove: function(id){
+
+				Swal.fire({
+					  title: 'Are you sure?',
+					  text: "You won't be able to revert this!",
+					  icon: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: 'Yes, delete it!'
+					}).then((result) => {
+					  if (result.isConfirmed) {
+
+					  	axios.get('remove-category/'+id).then((response)=>{
+
+	  				//toastr.success(response.data);
+	  				//toastr.success('Category delete success','Success');
+	  		// 		Toast.fire({
+					//   icon: 'success',
+					//   title: 'Category delete successfully'
+					// })
+					Swal.fire(
+					      'Deleted!',
+					      'Category delete success.',
+					      'success'
+					 )
+	  				this.$store.dispatch("getCategories");
+
+	  				
+		  		}).catch((error)=> {
+		  			
+		  	
+
+		  		})
+
+
+					    
+
+
+				}
+					})
+
+
+	        	
+	        }
         }
     }
 

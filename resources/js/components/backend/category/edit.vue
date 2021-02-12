@@ -8,7 +8,7 @@
             <!-- jquery validation -->
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Add Category</h3>
+                <h3 class="card-title">Edit Category</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -23,7 +23,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" :disabled="form.busy" class="btn btn-primary">Submit</button>
+                  <button type="submit" :disabled="form.busy" class="btn btn-success">Update</button>
                 </div>
               </form>
             </div>
@@ -41,13 +41,7 @@
                 
                 	<ul class="list-inline text-secondary">
 					    <li v-for="cat in category">
-					        <i class="fa fa-folder text-secondary mr-2"></i> {{cat.name}} 
-
-					        <router-link to="category_edit">
-					        	<i type="button" class="fa fa-edit float-right text-danger ml-2"></i>
-					        </router-link> 
-
-					        <i type="button" @click="remove(cat.id)" class="fa fa-trash-alt float-right text-danger"></i>
+					        <i class="fa fa-folder text-secondary mr-2"></i> {{cat.name}} <i type="button" class="fa fa-edit float-right text-danger ml-2"></i> <i type="button" @click="remove(cat.id)" class="fa fa-trash-alt float-right text-danger"></i>
 					    </li>
 
 					   
@@ -63,7 +57,7 @@
 
 <script>
     export default {
-        name: "create",
+        name: "edit",
 
 	        data () {
 			    return {
