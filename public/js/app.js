@@ -2264,7 +2264,7 @@ __webpack_require__.r(__webpack_exports__);
         aithis.form.status = null;
       })["catch"](function (error) {
         //toastr.error("Somting Worng");
-        Swal.fire('Error!', 'Category Created Somting Worng.', 'error');
+        Swal.fire('Error!', 'Category Not Created Somting Worng.', 'error');
       });
       this.$store.dispatch("getCategories");
     },
@@ -2382,7 +2382,7 @@ __webpack_require__.r(__webpack_exports__);
         //  )
         //change router
         aithis.$router.push('/category_list');
-        toastr.success("Category Created successfully", 'Success'); // aithis.form.name = null;
+        toastr.success("Category updated successfully", 'Success'); // aithis.form.name = null;
         // aithis.form.slug = null;
         // aithis.form.status = null;
       })["catch"](function (error) {

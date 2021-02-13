@@ -105,7 +105,7 @@
 	  				//toastr.error("Somting Worng");
 	  				Swal.fire(
 					      'Error!',
-					      'Category Created Somting Worng.',
+					      'Category Not Created Somting Worng.',
 					      'error'
 					 )
 	  		})

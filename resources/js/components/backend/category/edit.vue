@@ -73,7 +73,7 @@
 					//change router
 					aithis.$router.push('/category_list');
 
-					toastr.success("Category Created successfully",'Success');
+					toastr.success("Category updated successfully",'Success');
 
 					// aithis.form.name = null;
 					// aithis.form.slug = null;

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Category;
 class CategorySeeder extends Seeder
 {
     /**
@@ -13,14 +13,24 @@ class CategorySeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
+        
+
         foreach(range(1,10) as $index){
-            
+            $category = $faker->unique()->name;
 
         	Category::create([
-        		'name' -> $faker->unique()->email,
-        		'slug' -> $faker->unique()->email,
-        		'status' -> $faker->unique()->email,
+        		'name' => $category,
+        		'slug' => slugify($category),
+        		'status' => $this->getRandomStatus(),
         	]);
         }
     }
+
+
+
+    public function getRandomStatus()
+        {
+            $status = array(0,1);
+            return $status[array_rand($status)];
+        }
 }

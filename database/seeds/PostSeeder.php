@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Post;
 
 class PostSeeder extends Seeder
 {
@@ -15,12 +16,12 @@ class PostSeeder extends Seeder
 
         foreach(range(1,50) as $index){
         	Post::create([
-        		'user_id' -> $faker->unique()->email,
-        		'category_id' -> $faker->unique()->email,
-        		'title' -> $faker->sentence,
-        		'content' -> $faker->paragraph,
-        		'thumbnail' -> $faker->imageUrl(),
-        		'status' -> $this->getRandomStatus(),
+        		'user_id' => rand(1,10),
+        		'category_id' => rand(1,10),
+        		'title' => $faker->sentence,
+        		'content' => $faker->paragraph,
+        		'thumbnail' => $faker->imageUrl(),
+        		'status' => $this->getRandomStatus(),
         	]);
         }
     }
