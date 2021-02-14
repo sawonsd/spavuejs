@@ -16,12 +16,11 @@
                   <thead>
                     <tr>
                       <th style="width: 10px">ID</th>
-                      <th>Category Name</th>
-                      <th>Category Name</th>
-                      <th>Category Name</th>
-                      <th>Category Name</th>
-                      <th>Category Name</th>
-                      <th>Slug</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Post</th>
+                      <th>Image</th>
+                      <th>Status</th>
                       <th style="width: 40px">Action</th>
                     </tr>
                   </thead>
@@ -32,12 +31,11 @@
                       <td>{{post.id}}</td>
                       <td>{{post.title}}</td>
                       <td>{{post.category.name}}</td>
+                      <td>{{post.content}}</td>
                       <td>
                         <img width="40" :src="post.thumbnail" alt="">
                       </td>
-                      <td>{{post.name}}</td>
-                      <td>{{post.name}}</td>
-                      <td>{{post.slug}}</td>
+                      <td>{{post.status}}</td>
                       <td>
                       		<router-link :to="'category_edit/' + post.slug">
                       			<i type="button" class="fa fa-edit text-danger ml-2"></i>

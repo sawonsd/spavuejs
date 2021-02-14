@@ -2562,8 +2562,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "manage",
   // data: function(){
@@ -44083,6 +44081,8 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(post.category.name))]),
                             _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post.content))]),
+                            _vm._v(" "),
                             _c("td", [
                               _c("img", {
                                 attrs: {
@@ -44093,11 +44093,7 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(post.name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(post.name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(post.slug))]),
+                            _c("td", [_vm._v(_vm._s(post.status))]),
                             _vm._v(" "),
                             _c(
                               "td",
@@ -44162,17 +44158,15 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticStyle: { width: "10px" } }, [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Category Name")]),
+        _c("th", [_vm._v("Title")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Category Name")]),
+        _c("th", [_vm._v("Category")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Category Name")]),
+        _c("th", [_vm._v("Post")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Category Name")]),
+        _c("th", [_vm._v("Image")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Category Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Slug")]),
+        _c("th", [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "40px" } }, [_vm._v("Action")])
       ])
@@ -61302,15 +61296,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/backend/post/manage.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _manage_vue_vue_type_template_id_0374cf84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./manage.vue?vue&type=template&id=0374cf84& */ "./resources/js/components/backend/post/manage.vue?vue&type=template&id=0374cf84&");
 /* harmony import */ var _manage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./manage.vue?vue&type=script&lang=js& */ "./resources/js/components/backend/post/manage.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _manage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _manage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -61340,7 +61333,7 @@ component.options.__file = "resources/js/components/backend/post/manage.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/backend/post/manage.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
