@@ -154,14 +154,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <router-link to="/category" class="nav-link">
+                <router-link to="/post_create" class="nav-link">
                   <i class="fas fa-plus"></i>
                   <p> Add Post</p>
                 </router-link>
               </li>
 
               <li class="nav-item">
-                <router-link to="/category" class="nav-link">
+                <router-link to="/post_list" class="nav-link">
                   <i class="fas fa-list"></i>
                   <p>All Post</p>
                 </router-link>

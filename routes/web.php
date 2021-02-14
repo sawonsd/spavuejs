@@ -31,3 +31,6 @@ Route::get('edit-category/{slug}','CategoryController@edit');
 Route::post('update-category','CategoryController@update');
 
 
+Route::get('get-posts','PostController@index');
+
+

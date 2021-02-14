@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
 
         
 
-        foreach(range(1,10) as $index){
+        foreach(range(1,20) as $index){
             $category = $faker->unique()->name;
 
         	Category::create([

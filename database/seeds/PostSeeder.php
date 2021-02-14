@@ -16,8 +16,8 @@ class PostSeeder extends Seeder
 
         foreach(range(1,50) as $index){
         	Post::create([
-        		'user_id' => rand(1,10),
-        		'category_id' => rand(1,10),
+        		'user_id' => rand(1,1),
+        		'category_id' => rand(1,2),
         		'title' => $faker->sentence,
         		'content' => $faker->paragraph,
         		'thumbnail' => $faker->imageUrl(),
