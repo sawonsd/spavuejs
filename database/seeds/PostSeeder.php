@@ -14,11 +14,14 @@ class PostSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        foreach(range(1,50) as $index){
+        foreach(range(1,2) as $index){
+            $title = $faker->sentence;
+
         	Post::create([
         		'user_id' => rand(1,1),
         		'category_id' => rand(1,2),
-        		'title' => $faker->sentence,
+        		'title' => $title,
+                'slug' => slugify($title),
         		'content' => $faker->paragraph,
         		'thumbnail' => $faker->imageUrl(),
         		'status' => $this->getRandomStatus(),

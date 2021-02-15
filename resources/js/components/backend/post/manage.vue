@@ -17,6 +17,7 @@
                     <tr>
                       <th style="width: 10px">ID</th>
                       <th>Title</th>
+                      <th>Create by</th>
                       <th>Category</th>
                       <th>Post</th>
                       <th>Image</th>
@@ -29,19 +30,23 @@
 
                     <tr v-for="post in posts">
                       <td>{{post.id}}</td>
-                      <td>{{post.title}}</td>
+                      <td>{{post.title | truncate(10, '...')}}</td>
+                      <td>{{post.user.name | truncate(10, '...')}}</td>
                       <td>{{post.category.name}}</td>
-                      <td>{{post.content}}</td>
+                      <td>{{post.content | truncate(10, '...')}}</td>
+                      <td><img width="40" :src="post.thumbnail" alt=""></td>
+                      <td><span class="badge" :class="statusColor(post.status)">{{post.status | capitalize}}</span></td>
+
                       <td>
-                        <img width="40" :src="post.thumbnail" alt="">
-                      </td>
-                      <td>{{post.status}}</td>
-                      <td>
-                      		<router-link :to="'category_edit/' + post.slug">
+                      		<router-link :to="'post_edit/' + post.slug">
                       			<i type="button" class="fa fa-edit text-danger ml-2"></i>
                       		</router-link>
                       		<i type="button" @click="remove(post.id)" class="fa fa-trash-alt text-danger"></i>
                       </td>
+                    </tr>
+
+                    <tr v-if="emptyData()">
+                      <td colspan="8" class="text-center text-danger h4">Data Not found</td>
                     </tr>
 
 
@@ -111,20 +116,31 @@
         },
 
         methods: {
+          emptyData()
+          {
+            return (this.posts.length < 1);
+          },
+
+          statusColor: function(status)
+          {
+            let data = {published: "badge-success", draft: "badge-danger"}
+            return data[status];
+          },
+
         	remove: function(id){
 
-				Swal.fire({
-					  title: 'Are you sure?',
-					  text: "You won't be able to revert this!",
-					  icon: 'warning',
-					  showCancelButton: true,
-					  confirmButtonColor: '#3085d6',
-					  cancelButtonColor: '#d33',
-					  confirmButtonText: 'Yes, delete it!'
-					}).then((result) => {
-					  if (result.isConfirmed) {
+    				Swal.fire({
+    					  title: 'Are you sure?',
+    					  text: "You won't be able to revert this!",
+    					  icon: 'warning',
+    					  showCancelButton: true,
+    					  confirmButtonColor: '#3085d6',
+    					  cancelButtonColor: '#d33',
+    					  confirmButtonText: 'Yes, delete it!'
+    					}).then((result) => {
+    					  if (result.isConfirmed) {
 
-					  	axios.get('remove-category/'+id).then((response)=>{
+					  	axios.get('remove-post/'+id).then((response)=>{
 
 	  				//toastr.success(response.data);
 	  				//toastr.success('Category delete success','Success');
@@ -137,7 +153,7 @@
 					      'Category delete success.',
 					      'success'
 					 )
-	  				this.$store.dispatch("getCategories");
+	  				this.$store.dispatch("getPosts");
 
 	  				
 		  		}).catch((error)=> {

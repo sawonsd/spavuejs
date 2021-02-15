@@ -15,7 +15,9 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th><input type="checkbox"></th>
+                      <th style="width:120px"><input :disabled="emptyData()" type="checkbox" @click="selectAll" v-model="selectedAll">
+                        
+                      </th>
                       <th style="width: 10px">ID</th>
                       <th>Category Name</th>
                       <th>Slug</th>
@@ -26,7 +28,7 @@
                   <tbody>
 
                     <tr v-for="cat in category">
-                      <td><input type="checkbox" :value="cat.id" v-model="categoriesId"></td>
+                      <td><input type="checkbox" :value="cat.id" v-model="selected"></td>
                       <td>{{cat.id}}</td>
                       <td>{{cat.name}}</td>
                       <td>{{cat.slug}}</td>
@@ -36,6 +38,24 @@
                       		</router-link>
                       		<i type="button" @click="remove(cat.id)" class="fa fa-trash-alt text-danger"></i>
                       </td>
+                    </tr>
+
+                    <tr v-if="emptyData()">
+                      <td colspan="5" class="text-center text-danger h4">Data Not found</td>
+                    </tr>
+
+                    <tr v-if="!emptyData()">
+                      <td colspan="5">
+                      <div class="dropdown">
+                        <button :disabled="!isSelected" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button @click="removeItems(selected)" class="dropdown-item" href="#">Remove</button>
+                        </div>
+                    </div>
+                      </td>
+                      
                     </tr>
 
 
@@ -90,12 +110,21 @@
 
         data: function(){
         	return {
-        		categoriesId:[]
+        		selected:[],
+            isSelected:false,
+            selectedAll:false,
         	}
         },
 
         mounted() {
         	this.$store.dispatch("getCategories");
+        },
+
+        watch: {
+          selected: function(selected){
+            this.isSelected=(selected.length > 0);
+            this.selectedAll = (selected.length === this.category.length);
+          }
         },
 
         computed: {
@@ -105,6 +134,9 @@
         },
 
         methods: {
+          removeItems: function(selected){
+            console.log(selected);
+          },
         	remove: function(id){
 
 				Swal.fire({
@@ -149,7 +181,38 @@
 
 
 	        	
-	        }
+	        },
+
+          emptyData()
+          {
+            return (this.category.length < 1);
+          },
+
+
+          selectAll: function (event)
+          {
+            if(event.target.checked === false)
+            {
+              this.selected = [];
+            }
+            else{
+              this.category.forEach((category)=>{
+                  this.selected.push(category.id);
+              });
+            }
+          }
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 

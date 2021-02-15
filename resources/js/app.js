@@ -3,6 +3,9 @@ require('./bootstrap');
 //vue js
 window.Vue = require('vue');
 
+
+
+
 //vform
 import { Form, HasError, AlertError } from 'vform'
 
@@ -73,6 +76,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import storeData from "./store/store";
+
+import {filter} from "./filter/filter";
 
 const store = new Vuex.Store(
 	storeData

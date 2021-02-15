@@ -2,21 +2,27 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
             	<!-- Content Header (Page header) -->
 
             <!-- jquery validation -->
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Edit Category</h3>
+                <h3 class="card-title">Edit Post</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form id="quickForm" @submit.prevent="updateCategory">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="name">Category</label>
-                    <input type="text" name="name" v-model="form.name" class="form-control" id="name" placeholder="Category Name" :class="{ 'is-invalid': form.errors.has('name') }">
+                    <label for="name">Title</label>
+                    <input type="text" name="name" v-model="form.name" class="form-control" id="name" placeholder="Post title" :class="{ 'is-invalid': form.errors.has('name') }">
+                    <has-error :form="form" field="name"></has-error>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="name">Content</label>
+                    <input type="text" name="name" v-model="form.name" class="form-control" id="name" placeholder="Post Content" :class="{ 'is-invalid': form.errors.has('name') }">
                     <has-error :form="form" field="name"></has-error>
                   </div>
 
