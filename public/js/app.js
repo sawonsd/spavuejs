@@ -2130,6 +2130,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "category",
   data: function data() {
@@ -2227,32 +2229,73 @@ __webpack_require__.r(__webpack_exports__);
     changeStatus: function changeStatus(id, selected, status) {
       var _this3 = this;
 
-      axios.post('/categories-status-change', {
-        id: id,
-        data: selected,
-        status: status
-      }).then(function (response) {
-        console.log(response.data);
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Category status change",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, status change!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post('/categories-status-change', {
+            id: id,
+            data: selected,
+            status: status
+          }).then(function (response) {
+            console.log(response.data);
 
-        _this3.$store.dispatch("getCategories"); //  this.selected=[];
-        //  this.isSelected=false;
-        //  this.selectedAll=false;
+            _this3.$store.dispatch("getCategories");
 
+            _this3.selected = [];
+            _this3.isSelected = false;
+            _this3.selectedAll = false;
+            toastr.success("Category status change successfully", 'Success');
+          })["catch"](function (error) {});
+        }
+      });
+    },
+    changeStatusAll: function changeStatusAll(selected, status) {
+      var _this4 = this;
 
-        toastr.success(response.data + " Category status change successfully", 'Success');
-      })["catch"](function (error) {});
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Category status change",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, status change!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios.post('/categories-status-all', {
+            data: selected,
+            status: status
+          }).then(function (response) {
+            console.log(response.data);
+
+            _this4.$store.dispatch("getCategories");
+
+            _this4.selected = [];
+            _this4.isSelected = false;
+            _this4.selectedAll = false;
+            toastr.success("Category status change successfully", 'Success');
+          })["catch"](function (error) {});
+        }
+      });
     },
     emptyData: function emptyData() {
       return this.category.length < 1;
     },
     selectAll: function selectAll(event) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (event.target.checked === false) {
         this.selected = [];
       } else {
         this.category.forEach(function (category) {
-          _this4.selected.push(category.id);
+          _this5.selected.push(category.id);
         });
       }
     }
@@ -43970,6 +44013,7 @@ var render = function() {
                                     },
                                     [_vm._v("Remove")]
                                   ),
+                                  _vm._v(" "),
                                   _c(
                                     "button",
                                     {
@@ -43977,7 +44021,7 @@ var render = function() {
                                       attrs: { href: "#" },
                                       on: {
                                         click: function($event) {
-                                          return _vm.changeStatus(
+                                          return _vm.changeStatusAll(
                                             _vm.selected,
                                             1
                                           )
@@ -43985,6 +44029,23 @@ var render = function() {
                                       }
                                     },
                                     [_vm._v("Active")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.changeStatusAll(
+                                            _vm.selected,
+                                            0
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Inactive")]
                                   )
                                 ]
                               )

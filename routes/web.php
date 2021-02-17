@@ -32,6 +32,7 @@ Route::post('update-category','CategoryController@update');
 
 Route::post('/categories-remove-items','CategoryController@reomveItems');
 Route::post('/categories-status-change','CategoryController@statusChange');
+Route::post('/categories-status-all','CategoryController@statusChangeAll');
 
 
 

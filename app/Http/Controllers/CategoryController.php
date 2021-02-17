@@ -141,21 +141,68 @@ class CategoryController extends Controller
     public function statusChange(request $request)
     {
 
-           if($request->status==0){
+           // if($request->status==0){
+
+           //      $data=array();
+           //      $data['status']=1;
+           //      DB::table('categories')->where('id',$request->id)->update($data);
+           // }elseif($request->status==1){
+           //      $data=array();
+           //      $data['status']=0;
+           //      DB::table('categories')->where('id',$request->id)->update($data);
+           // }
+
+        if($request->data){
+            $sl = 0;
+            foreach ($request->data as $id) {
+                $category = Category::find($id);
+                $category->status = $request->status;
+                $category->save();
+                $sl++;
+            }
+
+            $success = $sl > 0 ? true : false;
+
+            return response()->json(['success' => $success, 'total' => $sl],200);
+        }else{
+
+            if($request->status==0){
 
                 $data=array();
                 $data['status']=1;
                 DB::table('categories')->where('id',$request->id)->update($data);
-           }else{
-            $data=array();
+           }elseif($request->status==1){
+                $data=array();
                 $data['status']=0;
                 DB::table('categories')->where('id',$request->id)->update($data);
            }
+        }
 
-          
+        
+
+
+    }
+
+
+    public function statusChangeAll(request $request)
+    {
 
 
 
+   
+            $sl = 0;
+            foreach ($request->data as $id) {
+                $category = Category::find($id);
+                $category->status = $request->status;
+                $category->save();
+                $sl++;
+            }
+
+            $success = $sl > 0 ? true : false;
+
+            return response()->json(['success' => $success, 'total' => $sl],200);
+
+        
 
 
     }

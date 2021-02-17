@@ -28,7 +28,9 @@
                           Action
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <button @click="removeItems(selected)" class="dropdown-item" href="#">Remove</button><button @click="changeStatus(selected,1)" class="dropdown-item" href="#">Active</button>
+                          <button @click="removeItems(selected)" class="dropdown-item" href="#">Remove</button>
+                          <button @click="changeStatusAll(selected,1)" class="dropdown-item" href="#">Active</button>
+                          <button @click="changeStatusAll(selected,0)" class="dropdown-item" href="#">Inactive</button>
                         </div>
                     </div>
                       </th>
@@ -108,7 +110,7 @@
 
         data: function(){
         	return {
-        		selected:[],
+            selected:[],
             isSelected:false,
             selectedAll:false,
         	}
@@ -225,19 +227,73 @@
 
           changeStatus: function(id,selected,status)
           {
-          axios.post('/categories-status-change', {id:id,data:selected, status:status}).then((response)=>{
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "Category status change",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, status change!'
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+
+              axios.post('/categories-status-change', {id:id, data:selected, status:status}).then((response)=>{
             console.log(response.data);
             this.$store.dispatch("getCategories");
-            //  this.selected=[];
-            //  this.isSelected=false;
-            //  this.selectedAll=false;
-            toastr.success(response.data + " Category status change successfully",'Success');
+             this.selected=[];
+             this.isSelected=false;
+             this.selectedAll=false;
+            toastr.success("Category status change successfully",'Success');
 
           }).catch((error)=> {
             
         
 
         })
+
+
+
+    }
+
+          })
+          
+          },
+          changeStatusAll: function(selected,status)
+          {
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "Category status change",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, status change!'
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+
+              axios.post('/categories-status-all', {data:selected, status:status}).then((response)=>{
+            console.log(response.data);
+            this.$store.dispatch("getCategories");
+             this.selected=[];
+             this.isSelected=false;
+             this.selectedAll=false;
+            toastr.success("Category status change successfully",'Success');
+
+          }).catch((error)=> {
+            
+        
+
+        })
+
+
+
+    }
+
+          })
+          
           },
 
           emptyData()
