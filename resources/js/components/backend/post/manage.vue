@@ -15,6 +15,7 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
+                      <th><input type="checkbox" @click="selectAll" v-model="selectedAll"></th>
                       <th style="width: 10px">ID</th>
                       <th>Title</th>
                       <th>Create by</th>
@@ -22,13 +23,23 @@
                       <th>Post</th>
                       <th>Image</th>
                       <th>Status</th>
-                      <th style="width: 40px">Action</th>
+                      <th style="width: 40px">
+                        <div class="dropdown">
+                        <button :disabled="!isSelected" class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button @click="removePosts(selected)" class="dropdown-item" href="#">Remove</button>
+                        </div>
+                    </div>
+                      </th>
                     </tr>
                   </thead>
 
                   <tbody>
 
                     <tr v-for="post in posts">
+                      <td><input type="checkbox" :value="post.id" v-model="selected"></td>
                       <td>{{post.id}}</td>
                       <td>{{post.title | truncate(10, '...')}}</td>
                       <td>{{post.user.name | truncate(10, '...')}}</td>
@@ -99,14 +110,23 @@
     export default {
         name: "manage",
 
-        // data: function(){
-        // 	return {
-        		
-        // 	}
-        // },
+        data: function(){
+        	return {
+        		selected:[],
+            isSelected:false,
+            selectedAll:false,
+        	}  
+        },
 
         mounted() {
         	this.$store.dispatch("getPosts");
+        },
+
+        watch: {
+          selected: function(selected){
+            this.isSelected=(selected.length > 0);
+            this.selectedAll = (selected.length === this.posts.length);
+          }
         },
 
         computed: {
@@ -116,6 +136,19 @@
         },
 
         methods: {
+          selectAll: function (event)
+          {
+            if(event.target.checked === false)
+            {
+              this.selected = [];
+            }
+            else{
+              this.posts.forEach((posts)=>{
+                  this.selected.push(posts.id);
+              });
+            }
+          },
+
           emptyData()
           {
             return (this.posts.length < 1);
@@ -125,6 +158,43 @@
           {
             let data = {published: "badge-success", draft: "badge-danger"}
             return data[status];
+          },
+
+          removePosts: function(selected){
+
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+             console.log(selected);
+            axios.post('/posts-remove-items', {data:selected}).then((response)=>{
+              console.log(response.data);
+              this.$store.dispatch("getPosts");
+              this.selected=[];
+              this.isSelected=false;
+              this.selectedAll=false;
+              toastr.success(response.data.total + " Post delete successfully",'Success');
+
+            }).catch((error)=> {
+            
+        
+
+          })
+
+
+              
+
+
+        }
+          })
+
+
           },
 
         	remove: function(id){

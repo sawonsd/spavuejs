@@ -30,11 +30,17 @@ Route::get('remove-category/{id}','CategoryController@destroy');
 Route::get('edit-category/{slug}','CategoryController@edit');
 Route::post('update-category','CategoryController@update');
 
+Route::post('/categories-remove-items','CategoryController@reomveItems');
+Route::post('/categories-status-change','CategoryController@statusChange');
+
+
 
 Route::get('get-posts','PostController@index');
 Route::post('add-post','PostController@store');
 Route::get('remove-post/{id}','PostController@destroy');
 Route::get('edit-post/{slug}','PostController@edit');
 Route::post('update-post','PostController@update');
+
+Route::post('/posts-remove-items','PostController@reomvePosts');
 
 

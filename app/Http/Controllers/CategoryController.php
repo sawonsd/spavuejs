@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use DB;
+
 
 class CategoryController extends Controller
 {
@@ -118,5 +120,43 @@ class CategoryController extends Controller
         $categories = Category::find($id);
 
         $categories->delete();
+    }
+
+    public function reomveItems(request $request)
+    {
+
+        $sl = 0;
+        foreach ($request->data as $id) {
+            $category = Category::find($id);
+            $category->delete();
+            $sl++;
+        }
+
+        $success = $sl > 0 ? true : false;
+
+        return response()->json(['success' => $success, 'total' => $sl],200);
+    }
+
+
+    public function statusChange(request $request)
+    {
+
+           if($request->status==0){
+
+                $data=array();
+                $data['status']=1;
+                DB::table('categories')->where('id',$request->id)->update($data);
+           }else{
+            $data=array();
+                $data['status']=0;
+                DB::table('categories')->where('id',$request->id)->update($data);
+           }
+
+          
+
+
+
+
+
     }
 }

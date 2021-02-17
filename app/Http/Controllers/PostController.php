@@ -88,4 +88,19 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
     }
+
+
+    public function reomvePosts(Request $request)
+    {
+        $sl = 0;
+        foreach ($request->data as $id) {
+            $post = Post::find($id);
+            $post->delete();
+            $sl++;
+        }
+
+        $success = $sl > 0 ? true : false;
+
+        return response()->json(['success' => $success, 'total' => $sl],200);
+    }
 }

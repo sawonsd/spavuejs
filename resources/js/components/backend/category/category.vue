@@ -15,13 +15,23 @@
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      <th style="width:120px"><input :disabled="emptyData()" type="checkbox" @click="selectAll" v-model="selectedAll">
+                      <th style="width:20px"><input :disabled="emptyData()" type="checkbox" @click="selectAll" v-model="selectedAll">
                         
                       </th>
                       <th style="width: 10px">ID</th>
                       <th>Category Name</th>
                       <th>Slug</th>
-                      <th style="width: 40px">Action</th>
+                      <th>Status</th>
+                      <th style="width: 40px">
+                        <div class="dropdown">
+                        <button :disabled="!isSelected" class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <button @click="removeItems(selected)" class="dropdown-item" href="#">Remove</button><button @click="changeStatus(selected,1)" class="dropdown-item" href="#">Active</button>
+                        </div>
+                    </div>
+                      </th>
                     </tr>
                   </thead>
 
@@ -33,6 +43,10 @@
                       <td>{{cat.name}}</td>
                       <td>{{cat.slug}}</td>
                       <td>
+                        <span type="submit" class="badge" @click="changeStatus(cat.id,selected,cat.status)" :class="statusColor(cat.status)">{{statusName(cat.status)}}</span>
+                        
+                      </td>
+                      <td>
                       		<router-link :to="'category_edit/' + cat.slug">
                       			<i type="button" class="fa fa-edit text-danger ml-2"></i>
                       		</router-link>
@@ -43,22 +57,6 @@
                     <tr v-if="emptyData()">
                       <td colspan="5" class="text-center text-danger h4">Data Not found</td>
                     </tr>
-
-                    <tr v-if="!emptyData()">
-                      <td colspan="5">
-                      <div class="dropdown">
-                        <button :disabled="!isSelected" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Action
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <button @click="removeItems(selected)" class="dropdown-item" href="#">Remove</button>
-                        </div>
-                    </div>
-                      </td>
-                      
-                    </tr>
-
-
 
                   </tbody>
                 </table>
@@ -134,8 +132,50 @@
         },
 
         methods: {
+          statusName: function(status)
+          {
+            let data = {0:"Inactive",1:"Active"}
+            return data[status];
+          },
+          statusColor: function(status)
+          {
+            let data = {1: "badge-success", 0: "badge-danger"}
+            return data[status];
+          },
           removeItems: function(selected){
-            console.log(selected);
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+             console.log(selected);
+            axios.post('/categories-remove-items', {data:selected}).then((response)=>{
+              console.log(response.data);
+              this.$store.dispatch("getCategories");
+              this.selected=[];
+              this.isSelected=false;
+              this.selectedAll=false;
+              toastr.success(response.data.total + " Category delete successfully",'Success');
+
+            }).catch((error)=> {
+            
+        
+
+          })
+
+
+              
+
+
+        }
+          })
+
+
           },
         	remove: function(id){
 
@@ -182,6 +222,23 @@
 
 	        	
 	        },
+
+          changeStatus: function(id,selected,status)
+          {
+          axios.post('/categories-status-change', {id:id,data:selected, status:status}).then((response)=>{
+            console.log(response.data);
+            this.$store.dispatch("getCategories");
+            //  this.selected=[];
+            //  this.isSelected=false;
+            //  this.selectedAll=false;
+            toastr.success(response.data + " Category status change successfully",'Success');
+
+          }).catch((error)=> {
+            
+        
+
+        })
+          },
 
           emptyData()
           {

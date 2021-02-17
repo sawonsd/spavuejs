@@ -14,12 +14,12 @@ class PostSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        foreach(range(1,2) as $index){
+        foreach(range(1,20) as $index){
             $title = $faker->sentence;
 
         	Post::create([
         		'user_id' => rand(1,1),
-        		'category_id' => rand(1,2),
+        		'category_id' => rand(1,20),
         		'title' => $title,
                 'slug' => slugify($title),
         		'content' => $faker->paragraph,
